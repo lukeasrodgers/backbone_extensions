@@ -219,6 +219,24 @@ describe('delegateEvents', function() {
         expect($.fn.off.calls[0].args[1]).toEqual(selector);
       });
     });
+
+    describe('for typical Backbone view event bindings', function() {
+      beforeEach(function() {
+        jasmine.content().append('<div/>');
+      });
+      it('should unbind the events', function() {
+        var clickSpy = jasmine.createSpy('clickSpy');
+        subject = new Klass({el: jasmine.content()[0]});
+        jasmine.content().append('<div/>');
+        subject.delegateEvents({
+          'click div': clickSpy
+        });
+        subject.undelegateEvents();
+        subject.$("div").click();
+        expect(clickSpy).not.toHaveBeenCalled();
+      });
+    
+    });
   });
 
   describe("#remove", function() {
