@@ -60,13 +60,13 @@ describe('delegateEvents', function() {
 
     describe("when it is called with a tuple", function() {
       describe("when the subject is not a jquery", function() {
-        var resetSpy1, resetSpy2, context = {};
+        var resetSpy1, resetSpy2;
 
         beforeEach(function() {
           resetSpy1 = jasmine.createSpy('resetSpy1');
           resetSpy2 = jasmine.createSpy('resetSpy2');
           spyOn(subject, 'undelegateEvents').andCallThrough();
-          subject.delegateEvents([model, {change: changeSpy, reset: [resetSpy1, resetSpy2], add: 'method'}, context]);
+          subject.delegateEvents([model, {change: changeSpy, reset: [resetSpy1, resetSpy2], add: 'method'}]);
         });
 
         it('should call undelegate events', function() {
@@ -78,18 +78,18 @@ describe('delegateEvents', function() {
           expect(changeSpy).toHaveBeenCalled();
         });
 
-        it("should bind backbone callbacks that are supplied as an array with the expected context", function() {
+        it("should bind backbone callbacks that are supplied as an array with view as context", function() {
           model.trigger('reset');
           expect(resetSpy1).toHaveBeenCalled();
-          expect(resetSpy1.mostRecentCall.object).toEqual(context);
+          expect(resetSpy1.mostRecentCall.object).toEqual(subject);
           expect(resetSpy2).toHaveBeenCalled();
-          expect(resetSpy2.mostRecentCall.object).toEqual(context);
+          expect(resetSpy2.mostRecentCall.object).toEqual(subject);
         });
 
         it('should bind the event with the expected context if it is a string', function() {
           model.trigger('add');
           expect(methodSpy).toHaveBeenCalled();
-          expect(methodSpy.mostRecentCall.object).toEqual(context);
+          expect(methodSpy.mostRecentCall.object).toEqual(subject);
         });
 
         it("should be resilient against null backbone objects", function() {
