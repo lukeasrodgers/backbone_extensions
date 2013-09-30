@@ -98,80 +98,6 @@ describe('delegateEvents', function() {
           }).not.toThrow();
         });
       });
-
-      describe("when the subject is a jquery", function() {
-        describe("when called with a function", function() {
-          describe("when it is called with a selector", function() {
-            var $el, clickSpy, selector = 'span';
-            beforeEach(function() {
-              $el = $('<div/>').append('<span/>');
-              clickSpy = jasmine.createSpy('click');
-              subject.delegateEvents([$el, {click: clickSpy}, selector]);
-            });
-
-            it("should call jQuery on for the events on the selector", function() {
-              expect($.fn.on.mostRecentCall.args.length).toBe(3);
-              expect($.fn.on.mostRecentCall.args[0]).toEqual('click');
-              expect($.fn.on.mostRecentCall.args[1]).toEqual(selector);
-              expect($.fn.on.mostRecentCall.object).toEqual($el);
-
-              $el.click();
-              expect(clickSpy).not.toHaveBeenCalled();
-
-              expect(function() {
-                $el.find(selector).click();
-              }).not.toThrow();
-
-              expect(clickSpy).toHaveBeenCalled();
-              expect(clickSpy.mostRecentCall.args.length).toBe(1);
-            });
-          });
-
-          describe("when it is called without a selector", function() {
-            var $el, clickSpy;
-            beforeEach(function() {
-              $el = $('<div/>');
-              clickSpy = jasmine.createSpy('click');
-              subject.delegateEvents([$el, {click: clickSpy}]);
-            });
-            it("should call jQuery on for the events", function() {
-              expect($.fn.on.mostRecentCall.args.length).toBe(2);
-              expect($.fn.on.mostRecentCall.args[0]).toEqual('click');
-              expect($.fn.on.mostRecentCall.object).toEqual($el);
-
-              expect(function() {
-                $el.click();
-              }).not.toThrow();
-
-              expect(clickSpy).toHaveBeenCalled();
-              expect(clickSpy.mostRecentCall.args.length).toBe(1);
-            });
-          });
-        });
-
-        describe("when called with a string", function() {
-          var $el, clickSpy;
-          beforeEach(function() {
-            $el = $('<div/>');
-            clickSpy = jasmine.createSpy('click');
-            subject.click = clickSpy;
-            subject.delegateEvents([$el, {click: 'click'}]);
-          });
-
-          it("should call jQuery on for the events", function() {
-            expect($.fn.on.mostRecentCall.args.length).toBe(2);
-            expect($.fn.on.mostRecentCall.args[0]).toEqual('click');
-            expect($.fn.on.mostRecentCall.object).toEqual($el);
-
-            expect(function() {
-              $el.click();
-            }).not.toThrow();
-
-            expect(clickSpy).toHaveBeenCalled();
-            expect(clickSpy.mostRecentCall.args.length).toBe(1);
-          });
-        });
-      });
     });
 
     describe("when it is called with a hash and a tuple", function() {
@@ -202,22 +128,6 @@ describe('delegateEvents', function() {
     it("should remove backbone events", function() {
       model.trigger('change');
       expect(changeSpy).not.toHaveBeenCalled();
-    });
-
-    describe("when the jquery event passed a context", function() {
-      var $el, selector = 'span';
-      beforeEach(function() {
-        $el = $('<div/>').append('<span/>');
-        subject.delegateEvents([$el, {click: changeSpy}, selector]);
-        spyOn($.fn, 'off').andCallThrough();
-        subject.undelegateEvents();
-      });
-
-      it("should call jQuery off", function() {
-        expect($.fn.off).toHaveBeenCalled();
-        expect($.fn.off.calls[0].args[0]).toEqual('click');
-        expect($.fn.off.calls[0].args[1]).toEqual(selector);
-      });
     });
 
     describe('for typical Backbone view event bindings', function() {
