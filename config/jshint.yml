@@ -81,7 +81,7 @@ curly:    false     # true if curly braces around blocks should be required (eve
 noarg:    true      # true if arguments.caller and arguments.callee should be disallowed
 node:     false     # true if the Node.js environment globals should be predefined
 noempty:  true      # true if empty blocks should be disallowed
-nonew:    true      # true if using `new` for side-effects should be disallowed
+nonew:    false     # true if using `new` for side-effects should be disallowed
 
 
 # ------------ jshint_on_rails custom lint options (switch to true to disable some annoying warnings) ------------
