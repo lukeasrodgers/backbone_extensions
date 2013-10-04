@@ -1,7 +1,7 @@
 Backbone Extensions
 =====================
 
-[![Build Status](https://secure.travis-ci.org/rdy/backbone_extensions.png)](http://travis-ci.org/rdy/backbone_extensions)
+[![Build Status](https://secure.travis-ci.org/lukeasrodgers/backbone_extensions.png)](http://travis-ci.org/lukeasrodgers/backbone_extensions)
 
 Adds extensions to the Backbone javascript library. It adds the javascript as a rails engine to be included in to a Rails 3+ project. To use it make sure require underscore, and backbone.
 
